@@ -14,6 +14,8 @@ type Props = {
 type PageFormData = {
   title: string
   introText: string
+  section1Title: string
+  section1Text: string
 }
 
 export default function PageForm({ page }: Props) {
@@ -28,11 +30,17 @@ export default function PageForm({ page }: Props) {
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(page.coverImage || null)
   const [isUploading, setIsUploading] = useState(false)
 
-  const { register, handleSubmit, formState: { errors } } = useForm<PageFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PageFormData>({
     defaultValues: {
       title: page.title || '',
-      introText: page.introText || ''
-    }
+      introText: page.introText || '',
+      section1Title: page.section1Title || '',
+      section1Text: page.section1Text || '',
+    },
   })
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -61,6 +69,10 @@ export default function PageForm({ page }: Props) {
       })
 
       const data = await res.json()
+      if (!res.ok) {
+        throw new Error('Erro no upload')
+      }
+
       const url = data.urls[0]
 
       setUploadedUrl(url)
@@ -83,15 +95,25 @@ export default function PageForm({ page }: Props) {
   }
 
   async function onSubmit(data: PageFormData) {
+    const finalCoverImage = uploadedUrl || page.coverImage || null
+
+    // se quiser imagem obrigatória, descomente:
+    // if (!finalCoverImage) {
+    //   toast.error('Imagem principal é obrigatória')
+    //   return
+    // }
+
     const res = await fetch(`/api/admin/pages/${page.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title: data.title,
         introText: data.introText,
-        coverImage: uploadedUrl,
-        faq: faqs
-      })
+        section1Title: data.section1Title,
+        section1Text: data.section1Text,
+        coverImage: finalCoverImage,
+        faq: faqs,
+      }),
     })
 
     if (!res.ok) {
@@ -105,7 +127,6 @@ export default function PageForm({ page }: Props) {
 
   return (
     <div className="space-y-8">
-
       {/* HEADER */}
       <div>
         <h1 className="text-2xl font-semibold">Editar página</h1>
@@ -115,27 +136,42 @@ export default function PageForm({ page }: Props) {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-
         {/* CONTEÚDO */}
         <section className="rounded-3xl border border-[var(--color-admin-border)] bg-[var(--color-admin-bg)] p-6 shadow-sm">
           <h2 className="text-lg font-semibold">Conteúdo</h2>
 
           <div className="mt-6 space-y-4">
-
             <input
               {...register('title', { required: 'Título é obrigatório' })}
               placeholder="Título da página"
               className="w-full rounded-2xl border border-[var(--color-admin-border)] bg-[var(--color-bg-tertiary)] px-4 py-3 text-sm"
             />
-            {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
+            {errors.title && (
+              <p className="text-red-500 text-sm">{errors.title.message}</p>
+            )}
 
             <textarea
-              {...register('introText', { required: 'Texto introdutório é obrigatório' })}
+              {...register('introText', {
+                required: 'Texto introdutório é obrigatório',
+              })}
               placeholder="Texto introdutório"
               className="w-full rounded-3xl border border-[var(--color-admin-border)] bg-[var(--color-bg-tertiary)] px-4 py-3 text-sm"
             />
-            {errors.introText && <p className="text-red-500 text-sm">{errors.introText.message}</p>}
+            {errors.introText && (
+              <p className="text-red-500 text-sm">{errors.introText.message}</p>
+            )}
 
+            <input
+              {...register('section1Title')}
+              placeholder="Título da seção 1"
+              className="w-full rounded-2xl border border-[var(--color-admin-border)] bg-[var(--color-bg-tertiary)] px-4 py-3 text-sm"
+            />
+
+            <textarea
+              {...register('section1Text')}
+              placeholder="Texto da seção 1"
+              className="w-full rounded-3xl border border-[var(--color-admin-border)] bg-[var(--color-bg-tertiary)] px-4 py-3 text-sm"
+            />
           </div>
         </section>
 
@@ -144,7 +180,6 @@ export default function PageForm({ page }: Props) {
           <h2 className="text-lg font-semibold">Imagem principal</h2>
 
           <div className="mt-6 space-y-4">
-
             <label className="cursor-pointer rounded-3xl border border-dashed border-[var(--color-admin-border)] bg-[var(--color-bg-tertiary)] px-4 py-6 text-center text-sm">
               <input type="file" className="hidden" onChange={handleFileChange} />
               Selecionar imagem
@@ -164,7 +199,6 @@ export default function PageForm({ page }: Props) {
                 <img src={preview} className="h-48 w-full object-cover" />
               </div>
             )}
-
           </div>
         </section>
 
@@ -174,10 +208,8 @@ export default function PageForm({ page }: Props) {
             <h2 className="text-lg font-semibold">FAQ</h2>
 
             <div className="mt-6 space-y-4">
-
               {faqs.map((faq, index) => (
                 <div key={index} className="space-y-2">
-
                   <input
                     value={faq.question}
                     onChange={(e) => updateFaq(index, 'question', e.target.value)}
@@ -191,7 +223,6 @@ export default function PageForm({ page }: Props) {
                     placeholder="Resposta"
                     className="w-full rounded-2xl border border-[var(--color-admin-border)] px-3 py-2"
                   />
-
                 </div>
               ))}
 
@@ -202,7 +233,6 @@ export default function PageForm({ page }: Props) {
               >
                 + Adicionar pergunta
               </button>
-
             </div>
           </section>
         )}
@@ -216,7 +246,6 @@ export default function PageForm({ page }: Props) {
             Salvar alterações
           </button>
         </div>
-
       </form>
     </div>
   )

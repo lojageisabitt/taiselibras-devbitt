@@ -1,3 +1,4 @@
+// src/client/home/HomePage.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/core/lib/prisma";
