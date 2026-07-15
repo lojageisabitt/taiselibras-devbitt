@@ -12,8 +12,6 @@ import { CartProvider } from "@/core/context/CartContext";
 
 import { siteConfig } from "@/client/config/site.config";
 
-import Footer from "@/client/components/Footer";
-import Header from "@/client/components/Header";
 import PwaProvider from "@/core/pwa/PwaProvider";
 
 export const metadata: Metadata = {
@@ -171,7 +169,7 @@ export default function RootLayout({
 
           <CartProvider>
             <div className="flex min-h-screen flex-col">
-              <Header />
+              
 
               <main
                 className="w-full flex-1 pt-20"
@@ -183,7 +181,7 @@ export default function RootLayout({
                 {children}
               </main>
 
-              <Footer />
+              
             </div>
           </CartProvider>
         </PwaProvider>
