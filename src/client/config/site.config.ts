@@ -2,7 +2,7 @@
 // ⚠️ PREENCHA ESSES DADOS PARA CADA CLIENTE
 
 export const siteConfig = {
-  nome: "Nome do Negócio",
+  nome: "Thaise Libras",
 
   // Logo
   logoHorizontal: "/logo-horizontal.png",
@@ -81,7 +81,7 @@ keywords: [
   pwa: {
   enabled: true,
 
-  shortName: "Nome do Negócio",
+  shortName: "Thaise Libras",
 
   orientation: "any" as const,
 
