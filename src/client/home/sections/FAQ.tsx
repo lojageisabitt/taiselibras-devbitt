@@ -16,7 +16,7 @@ const questions = [
   {
     question: "As aulas são online ou presenciais?",
     answer:
-      "Os formatos podem variar conforme o curso ou serviço escolhido. Há opções de aprendizado online e atendimentos que podem ser combinados diretamente com a Thaís.",
+      "Os formatos podem variar conforme o curso ou serviço escolhido. Há opções de aprendizado online e atendimentos que podem ser combinados diretamente com a Thaise.",
   },
   {
     question: "Como funcionam as aulas particulares?",
@@ -36,10 +36,10 @@ const questions = [
   {
     question: "Como faço para saber qual curso escolher?",
     answer:
-      "Você pode entrar em contato pelo WhatsApp, informar seu nível atual e seu objetivo. Assim, a Thaís poderá orientar sobre a opção mais adequada.",
+      "Você pode entrar em contato pelo WhatsApp, informar seu nível atual e seu objetivo. Assim, a Thaise poderá orientar sobre a opção mais adequada.",
   },
   {
-    question: "A Thaís oferece interpretação em Libras?",
+    question: "A Thaise oferece interpretação em Libras?",
     answer:
       "Sim. É possível solicitar interpretação para eventos, igrejas, empresas, vídeos, aulas e outros projetos. A disponibilidade e o orçamento são avaliados individualmente.",
   },
@@ -54,7 +54,7 @@ export default function FAQ() {
   const whatsappNumber = siteConfig.whatsapp.replace(/\D/g, "");
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Olá, Thaís! Visitei seu site e ainda tenho algumas dúvidas sobre os cursos e serviços.",
+    "Olá, Thaise! Visitei seu site e ainda tenho algumas dúvidas sobre os cursos e serviços.",
   )}`;
 
   return (
@@ -210,7 +210,7 @@ export default function FAQ() {
                 className="mt-2 text-sm leading-6 sm:text-base"
                 style={{ color: "var(--color-text-secondary)" }}
               >
-                Fale diretamente com a Thaís para receber uma orientação
+                Fale diretamente com a Thaise para receber uma orientação
                 personalizada.
               </p>
             </div>

@@ -19,7 +19,7 @@ const socialLinks = [
   {
     icon: Youtube,
     label: "YouTube",
-    username: "Thaís Libras",
+    username: "Thaise Libras",
     href: "https://www.youtube.com/@thais.libras",
   },
 ];
@@ -28,7 +28,7 @@ export default function FinalCTA() {
   const whatsappNumber = siteConfig.whatsapp.replace(/\D/g, "");
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Olá, Thaís! Conheci seu trabalho pelo site e gostaria de saber mais sobre seus cursos e serviços.",
+    "Olá, Thaise! Conheci seu trabalho pelo site e gostaria de saber mais sobre seus cursos e serviços.",
   )}`;
 
   return (
@@ -103,7 +103,7 @@ export default function FinalCTA() {
               className="mx-auto mt-6 max-w-2xl text-base leading-7 sm:text-lg"
               style={{ color: "var(--color-text-secondary)" }}
             >
-              Fale com a Thaís para conhecer os cursos, consultar aulas
+              Fale com a Thaise para conhecer os cursos, consultar aulas
               particulares ou solicitar um orçamento de interpretação em
               Libras.
             </p>
@@ -113,7 +113,7 @@ export default function FinalCTA() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Falar com a Thaís pelo WhatsApp"
+                aria-label="Falar com a Thaise pelo WhatsApp"
                 className="inline-flex min-h-13 items-center justify-center gap-2 rounded-2xl px-7 font-semibold shadow-lg transition duration-200 hover:-translate-y-0.5 hover:brightness-95"
                 style={{
                   backgroundColor: "var(--color-success)",

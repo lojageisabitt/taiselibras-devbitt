@@ -43,7 +43,7 @@ const socialChannels = [
   {
     icon: Youtube,
     name: "YouTube",
-    username: "Thaís Libras",
+    username: "Thaise Libras",
     description:
       "Aulas e conteúdos mais completos para aprofundar seus conhecimentos em Libras.",
     href: "https://www.youtube.com/@thais.libras",
@@ -95,7 +95,7 @@ export default function FreeContent() {
             className="mt-5 text-base leading-7 sm:text-lg"
             style={{ color: "var(--color-text-secondary)" }}
           >
-            Acompanhe a Thaís nas redes sociais e tenha acesso a sinais,
+            Acompanhe a Thaise nas redes sociais e tenha acesso a sinais,
             expressões, explicações e dicas práticas para continuar evoluindo.
           </p>
         </div>

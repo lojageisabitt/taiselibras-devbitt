@@ -61,7 +61,7 @@ export const siteConfig = {
   copyrightTagline: "",
 
     seo: {
-titulo: "Thaís Libras | Cursos de Libras Online, Aulas e Interpretação",
+titulo: "Thaise Libras | Cursos de Libras Online, Aulas e Interpretação",
     descricao:
   "Aprenda Libras com cursos online, turmas ao vivo e aulas particulares. Conheça também os serviços de interpretação em Libras da professora Thaís.",
 

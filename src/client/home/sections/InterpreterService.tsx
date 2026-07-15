@@ -50,7 +50,7 @@ export default function InterpreterService() {
   const whatsappNumber = siteConfig.whatsapp.replace(/\D/g, "");
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Olá, Thaís! Gostaria de solicitar um orçamento para interpretação em Libras.",
+    "Olá, Thaise! Gostaria de solicitar um orçamento para interpretação em Libras.",
   )}`;
 
   return (
