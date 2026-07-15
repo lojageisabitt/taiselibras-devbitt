@@ -1,27 +1,101 @@
-import type { Viewport } from "next";
+import type {
+  Metadata,
+  Viewport,
+} from "next";
+import type { ReactNode } from "react";
 
 import "@/app/globals.css";
 
-import { CartProvider } from "@/core/context/CartContext";
+import { Toaster } from "react-hot-toast";
 
-import { JsonLd } from "@/core/components/seo/JsonLd";
+import { CartProvider } from "@/core/context/CartContext";
 
 import { siteConfig } from "@/client/config/site.config";
 
-import { Toaster } from "react-hot-toast";
-import { generatePageMetadata } from "@/core/lib/seo/generate-metadata";
-import { createOrganizationSchema, createWebsiteSchema, createBusinessSchema } from "@/core/components/seo/schema";
+import Footer from "@/client/components/Footer";
+import Header from "@/client/components/Header";
+import PwaProvider from "@/core/pwa/PwaProvider";
 
-export const metadata = generatePageMetadata({
-  pathname: "/",
-});
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.seo.url),
+
+  applicationName: siteConfig.nome,
+
+  manifest: "/manifest.webmanifest",
+
+  title: siteConfig.seo.titulo,
+
+  description: siteConfig.seo.descricao,
+
+  authors: [
+    {
+      name: siteConfig.nome,
+    },
+  ],
+
+  keywords: siteConfig.seo.keywords,
+
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: siteConfig.pwa.shortName,
+  },
+
+  icons: {
+    apple: siteConfig.pwa.appleTouchIcon,
+  },
+
+  formatDetection: {
+    telephone: false,
+  },
+
+  openGraph: {
+    title: siteConfig.seo.titulo,
+
+    description: siteConfig.seo.descricao,
+
+    url: siteConfig.seo.url,
+
+    siteName: siteConfig.nome,
+
+    locale: "pt_BR",
+
+    type: "website",
+
+    images: [
+      {
+        url: siteConfig.seo.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.seo.titulo,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title: siteConfig.nome,
+
+    description: siteConfig.seo.descricao,
+
+    images: [
+      siteConfig.seo.ogImage,
+    ],
+  },
+};
 
 export const viewport: Viewport = {
   width: "device-width",
+
   initialScale: 1,
+
+  themeColor: siteConfig.theme.accent,
 };
 
-function buildCssVariables(theme: typeof siteConfig.theme): string {
+function buildCssVariables(
+  theme: typeof siteConfig.theme,
+): string {
   return `
     :root {
       --color-bg-primary: ${theme.bgPrimary};
@@ -57,51 +131,62 @@ function buildCssVariables(theme: typeof siteConfig.theme): string {
 }
 
 interface RootLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function RootLayout({
   children,
-}: Readonly<RootLayoutProps>) {
+}: RootLayoutProps) {
+  const pwaEnabled =
+    siteConfig.pwa.enabled &&
+    process.env.NODE_ENV === "production";
+
   return (
     <html lang="pt-BR">
       <head>
         <style
           dangerouslySetInnerHTML={{
-            __html: buildCssVariables(siteConfig.theme),
+            __html: buildCssVariables(
+              siteConfig.theme,
+            ),
           }}
         />
-
-        <JsonLd data={createOrganizationSchema()} />
-        <JsonLd data={createWebsiteSchema()} />
-        <JsonLd data={createBusinessSchema()} />
       </head>
 
       <body
         className="overflow-x-hidden antialiased"
         style={{
-          backgroundColor: "var(--color-bg-primary)",
-          color: "var(--color-text-primary)",
+          backgroundColor:
+            "var(--color-bg-primary)",
+
+          color:
+            "var(--color-text-primary)",
         }}
       >
-        <Toaster position="top-right" reverseOrder={false} />
+        <PwaProvider enabled={pwaEnabled}>
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+          />
 
-        <CartProvider>
-          <div className="flex min-h-screen flex-col">
-            
+          <CartProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
 
-            <main
-              className="w-full flex-1"
-              style={{
-                backgroundColor: "var(--color-bg-primary)",
-              }}
-            >
-              {children}
-            </main>
+              <main
+                className="w-full flex-1 pt-20"
+                style={{
+                  backgroundColor:
+                    "var(--color-bg-primary)",
+                }}
+              >
+                {children}
+              </main>
 
-            
-          </div>
-        </CartProvider>
+              <Footer />
+            </div>
+          </CartProvider>
+        </PwaProvider>
       </body>
     </html>
   );
